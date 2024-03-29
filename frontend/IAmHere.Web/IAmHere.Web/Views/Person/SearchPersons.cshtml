@@ -1,0 +1,183 @@
+﻿@model List<IAmHere.Web.Models.Person.PersonModel>
+@{
+    ViewData["Title"] = "Search Persons";
+	Layout = "_Layout";
+}
+
+<section class="py-7">
+
+    <div class="container-fluid">
+     
+        <div class="carousel slide pt-6" id="carouselExampleDark" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div>
+                    <div class="d-flex justify-content-between align-items-center">
+                      
+                           
+                        <form method="get" action="@Url.Action("SearchPersons", "Person")">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="searchString" placeholder="Filter by name" value="@ViewBag.SearchString" />
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+
+                        </form>
+
+                        <a href="@Url.Action("AddPerson", "Person")" class="btn btn-primary">اضف مفقود</a>
+
+                     
+                    </div>
+                    <div class="row h-100">
+                        
+                        @foreach (var item in Model)
+                        {
+                            <!-- بطاقة لكل شخص -->
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 card-span p-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-content-center">
+                                            <!-- رمز الشخص قبل الاسم -->
+                                            <h5 class="mb-0 text-primary"><i class="fas fa-user"></i> الاسم: <span class="text-black-50">@item.FirstName @item.LastName</span></h5>
+                                            <!-- شارة لحالة الحالة -->
+                                            <div class="badge rounded-pill text-bg-primary">@item.CaseStatus</div>
+                                        </div>
+                                        <p class="card-text pt-3"></p>
+                                        <!-- جدول للعمر والبلد والجنس -->
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">العمر:</th>
+                                                    <td>@item.Age</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">الدولة:</th>
+                                                    <td>@item.Location</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">الجنس:</th>
+                                                    <td>@item.Gender</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- زر لعرض مربع حوار المعلومات الإضافية -->
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#extraInfoModal_@item.Id">
+                                            عرض المعلومات الإضافية
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- مربع حوار للمعلومات الإضافية -->
+                            <div class="modal fade" id="extraInfoModal_@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">المعلومات الإضافية</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- جدول للمعلومات الإضافية -->
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">الاسم</th>
+                                                        <td>@item.FirstName @item.LastName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">العمر</th>
+                                                        <td>@item.Age</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">الجنس</th>
+                                                        <td>@item.Gender</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">تاريخ آخر ظهور</th>
+                                                        <td>@item.LastSeenDate</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">الموقع</th>
+                                                        <td>@item.Location</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">الوصف</th>
+                                                        <td>@item.Description</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">تفاصيل الحالة</th>
+                                                        <td>@item.CaseDetails</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">وصف الملابس</th>
+                                                        <td>@item.ClothingDescription</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">الطول (سم)</th>
+                                                        <td>@item.HeightCM</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">الوزن (كغ)</th>
+                                                        <td>@item.WeightKG</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">لون الشعر</th>
+                                                        <td>@item.HairColor</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">لون العين</th>
+                                                        <td>@item.EyeColor</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">الاتصال</th>
+                                                        <td>@item.Contact</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">حالة الحالة</th>
+                                                        <td>@item.CaseStatus</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <nav aria-label="Page navigation example ">
+                            <ul class="pagination  justify-content-center py-2">
+                                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                                    <a class="text-rebeccapurple page-link " href="?page=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                @for (var i = 1; i <= ViewBag.TotalPages; i++)
+                                {
+                                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                        <a class="text-rebeccapurple page-link " href="?page=@i">@i</a>
+                                    </li>
+                                }
+                                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                                    <a class="text-rebeccapurple page-link " href="?page=@(ViewBag.CurrentPage + 1)" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- end of .container-->
+
+</section>
+
+
+@section scripts {
+    
+}

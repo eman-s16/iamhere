@@ -1,0 +1,24 @@
+html, body {
+    height: 100%;
+}
+
+
+.right {
+    direction: rtl !important;
+    unicode-bidi: bidi-override !important;
+}
+
+.error-message {
+    color: red; /* Red color for the error message */
+    font-size: 12px; /* Adjust font size as needed */
+}
+
+.invalid-input {
+    border-color: red !important; /* Red border for invalid input */
+    /* Add any additional styling for invalid input here */
+}
+.required-star::after {
+    content: "*"; /* Content to display (in this case, a star) */
+    color: red; /* Red color for the star */
+    margin-left: 5px; /* Adjust spacing between label text and star */
+}

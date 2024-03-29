@@ -1,0 +1,221 @@
+﻿@{
+    ViewData["Title"] = "اضف مفقود";
+    Layout = "_Layout";
+}
+@section CSS {
+    <link rel="stylesheet" href="~/css/style.css">
+}
+@model IAmHere.Web.Models.Person.PersonModel
+<div class="wrapper">
+
+    <form  id="personForm" onsubmit="SubmitPerson()" method="post">
+        <div id="wizard">
+            <!-- SECTION 1 -->
+            <h4></h4>
+            <section class="p-0">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="FirstName" class="form-label">الاسم الأول</label>
+                        <input asp-for="FirstName" class="form-control required" placeholder="الاسم الأول" required />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="LastName" class="form-label required-star">الاسم الأخير</label>
+                        <input asp-for="LastName" class="form-control required" placeholder="الاسم الأخير" required />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Age" class="form-label  required-star">العمر</label>
+                        <input asp-for="Age" type="number" class="form-control right required" placeholder="العمر" />
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Gender" class="form-label">الجنس</label>
+                        <select asp-for="Gender" class="form-select" required>
+                            <option value="ذكر">ذكر</option>
+                            <option value="أنثى">أنثى</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+          
+                </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <h4></h4>
+            <section>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="LastSeenDate" class="form-label">تاريخ الرؤية الأخيرة</label>
+                        <input asp-for="LastSeenDate" type="date" class="form-control right" placeholder="تاريخ الرؤية الأخيرة (YYYY-MM-DD)" />
+                        <span asp-validation-for="LastSeenDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Location" class="form-label">موقع الرؤية الأخيرة</label>
+                        <input asp-for="Location" class="form-control" placeholder="موقع الرؤية الأخيرة" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <label asp-for="Description" class="form-label">الوصف</label>
+                        <textarea asp-for="Description" class="form-control" placeholder="الوصف"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                  
+                </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <h4></h4>
+            <section>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="CaseDetails" class="form-label">تفاصيل الحالة</label>
+                        <textarea asp-for="CaseDetails" class="form-control" placeholder="تفاصيل الحالة"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="ClothingDescription" class="form-label">وصف الملابس</label>
+                        <input type="text" asp-for="ClothingDescription" class="form-control" placeholder="وصف الملابس">
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="HeightCM" class="form-label">الطول (سم)</label>
+                        <input type="number" asp-for="HeightCM" class="form-control right" placeholder="الطول (سم)">
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="WeightKG" class="form-label">الوزن (كجم)</label>
+                        <input type="number" asp-for="WeightKG" class="form-control right" placeholder="الوزن (كجم)">
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="HairColor" class="form-label">لون الشعر</label>
+                        <input type="text" asp-for="HairColor" class="form-control" placeholder="لون الشعر">
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="EyeColor" class="form-label">لون العيون</label>
+                        <input type="text" asp-for="EyeColor" class="form-control" placeholder="لون العيون">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Contact" class="form-label">رقم الاتصال</label>
+                        <input type="text" asp-for="Contact" class="form-control" placeholder="رقم الاتصال">
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="CaseStatus" class="form-label">حالة القضية</label>
+                        <select asp-for="CaseStatus" class="form-select" required>
+                            <option value="مفقود">مفقود</option>
+                            <option value="تم العثور عليه">تم العثور عليه</option>
+                            <option value="متوفى">متوفى</option>
+                        </select>
+                    </div>
+                   
+              
+
+                </div>
+
+            </section>
+
+
+        </div>
+    </form>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery.steps.js"></script>
+
+    <script>
+        $(function () {
+            $("#wizard").steps({
+                headerTag: "h4",
+                bodyTag: "section",
+                transitionEffect: "fade",
+                enableAllSteps: true,
+                transitionEffectSpeed: 500,
+                labels: {
+                    finish: "ارسل",
+                    next: "التالي",
+                    previous: "السابق"
+                },
+                onStepChanging: function (event, currentIndex, newIndex) {
+                    var $inputs = $('#wizard').find('.content').eq(currentIndex).find('.required');
+                    var isValid = true;
+
+                    // Check if any required input is empty
+                    $inputs.each(function () {
+                        if ($(this).val() === '') {
+                            isValid = false;
+                            // Show error message and add red border
+                            $(this).addClass('invalid-input');
+                            $('#' + $(this).attr('id') + 'Error').text('هذا الحقل مطلوب');
+                            return false; // Break the loop if any input is empty
+                        } else {
+                            // Remove error message and red border if input is not empty
+                            $(this).removeClass('invalid-input');
+                            $('#' + $(this).attr('id') + 'Error').text('');
+                        }
+                    });
+
+                    // If any required input is empty, prevent moving to the next step
+                    if (!isValid) {
+                        return false;
+                    }
+                    return true;
+                },
+                onFinished: function (event, currentIndex) {
+                    // Submit the form when all steps are completed
+                    SubmitPerson();
+                }
+            });
+        });
+
+        function SubmitPerson() {
+            // Get the form element
+            const form = document.getElementById("personForm");
+
+            // Create FormData object from the form
+            const formData = new FormData(form);
+
+         
+
+            // Send serialized form data to controller action
+            $.ajax({
+                url: '@Url.Action("AddPerson", "Person")',
+                type: form.method,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    // Handle success response
+                    showSuccessAlert();
+
+                   
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    console.error(error);
+                    // Optionally, display error message to the user
+                }
+            });
+        }
+
+        function showSuccessAlert() {
+            Swal.fire({
+                title: 'تمت العملية بنجاح!',
+                text: 'تم إضافة المفقود بنجاح.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            }).then((result) => {
+                // Check if the user clicked "OK"
+                if (result.isConfirmed) {
+                    // Redirect to the index page of the home controller
+                    window.location.href = '@Url.Action("SearchPersons", "Person")';
+                }
+            });
+        }
+    </script>
+}
+
